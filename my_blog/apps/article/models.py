@@ -1,9 +1,10 @@
 from django.db import models
 from utils.models import BaseModel
-from django.contrib.auth.models import User
+from apps.user_info.models import User
 
 
 class Article(BaseModel):
+    author = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='articles')
     title = models.CharField(max_length=100, verbose_name='标题')
     content = models.TextField(verbose_name='文章内容')
 

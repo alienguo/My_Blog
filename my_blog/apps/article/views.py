@@ -7,13 +7,16 @@ from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 class ArticleListAPIView(APIView):
 
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request):
         articles = Article.objects.all()
-        serializer = ArticleSerializer(articles, many=True)
+        serializer = ArticleSerializer(articles, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
@@ -68,3 +71,4 @@ class ArticleDetailRUDAPIView(RetrieveUpdateDestroyAPIView):
 
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
