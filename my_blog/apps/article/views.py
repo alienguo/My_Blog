@@ -8,6 +8,8 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
 # class ArticleListAPIView(APIView):
@@ -74,6 +76,11 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 #     permission_classes = [IsAuthenticatedOrReadOnly]
 
 class ArticleViewSet(viewsets.ModelViewSet):
+
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title']
+    # filterset_fields = ['author__username', 'title']
