@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'articles', views.ArticleViewSet)
+router.register(r'category', views.CategoryViewSet)
 urlpatterns = [
     path('', include(router.urls))
     # path('articles/', views.ArticleListAPIView.as_view()),
